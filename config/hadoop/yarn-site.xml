@@ -18,48 +18,147 @@
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 
 <configuration>
-  <property>
-    <name>yarn.nodemanager.aux-services</name>
-    <value>mapreduce_shuffle</value>
-  </property>
+    <property>
+        <name>yarn.nodemanager.aux-services</name>
+        <value>mapreduce_shuffle</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.aux-services.mapreduce_shuffle.class</name>
+        <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+    </property>
+    <property>
+        <description>Classpath for typical applications.</description>
+        <name>yarn.application.classpath</name>
+        <value>
+            $HADOOP_CONF_DIR,
+            $HADOOP_COMMON_HOME/share/hadoop/common/*,
+            $HADOOP_COMMON_HOME/share/hadoop/common/lib/*,
+            $HADOOP_HDFS_HOME/share/hadoop/hdfs/*,
+            $HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,
+            $HADOOP_YARN_HOME/share/hadoop/yarn/*,
+            $HADOOP_YARN_HOME/share/hadoop/yarn/lib/*
+        </value>
+    </property>
 
-  <property>
-    <name>yarn.nodemanager.aux-services.mapreduce_shuffle.class</name>
-    <value>org.apache.hadoop.mapred.ShuffleHandler</value>
-  </property>
+    <property>
+        <name>yarn.log-aggregation-enable</name>
+        <value>true</value>
+    </property>
 
-  <property>
-    <name>yarn.log-aggregation-enable</name>
-    <value>true</value>
-  </property>
+    <!-- ==================================================================== -->
+    <!-- Make sure all daemons are listening on all network interfaces.       -->
+    <!-- This is needed for multi-homed environments to work                  -->
+    <!-- ==================================================================== -->
+    <property>
+        <name>yarn.resourcemanager.bind-host</name>
+        <value>0.0.0.0</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.bind-host</name>
+        <value>0.0.0.0</value>
+    </property>
+    <property>
+        <name>yarn.timeline-service.bind-host</name>
+        <value>0.0.0.0</value>
+    </property>
 
-  <property>
-    <description>List of directories to store localized files in.</description>
-    <name>yarn.nodemanager.local-dirs</name>
-    <value>file:///var/lib/hadoop-yarn/cache/${user.name}/nm-local-dir</value>
-  </property>
 
-  <property>
-    <description>Where to store container logs.</description>
-    <name>yarn.nodemanager.log-dirs</name>
-    <value>file:///var/log/hadoop-yarn/containers</value>
-  </property>
 
-  <property>
-    <description>Where to aggregate logs to.</description>
-    <name>yarn.nodemanager.remote-app-log-dir</name>
-    <value>hdfs://var/log/hadoop-yarn/apps</value>
-  </property>
 
-  <property>
-    <description>Classpath for typical applications.</description>
-     <name>yarn.application.classpath</name>
-     <value>
-        $HADOOP_CONF_DIR,
-        $HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,
-        $HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,
-        $HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,
-        $HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*
-     </value>
-  </property>
+    <!-- ==================================================================== -->
+    <!-- Web Apps                                                             -->
+    <!-- ==================================================================== -->
+    <property>
+        <name>yarn.nodemanager.webapp.address</name>
+        <value>{{ hex.name }}.hex.bigboards.io:8042</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.webapp.address</name>
+        <value>{{ hex.name }}.hex.bigboards.io:8088</value>
+    </property>
+    <property>
+        <name>yarn.web-proxy.address</name>
+        <value>{{ hex.name }}.hex.bigboards.io:9046</value>
+    </property>
+
+    <!-- ==================================================================== -->
+    <!-- API's                                                                -->
+    <!-- ==================================================================== -->
+    <property>
+        <name>yarn.resourcemanager.hostname</name>
+        <value>{{ hex.name }}-n1</value>
+    </property>
+
+    <property>
+        <name>yarn.nodemanager.hostname</name>
+        <value>{{ ansible_hostname }}</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.address</name>
+        <value>${yarn.nodemanager.hostname}:8041</value>
+    </property>
+
+
+
+    <!-- ==================================================================== -->
+    <!-- These property values were generated with hdp-configuration-utils.py -->
+    <!-- armv7l => Using cores=4 memory=2GB disks=1 hbase=False               -->
+    <!-- x86_64 => Using cores=4 memory=16GB disks=1 hbase=False              -->
+    <!--                                                                      -->
+    <!-- This node's architecture is '{{ ansible_architecture }}'             -->
+    <!-- ==================================================================== -->
+    <property>
+        <name>yarn.nodemanager.resource.memory-mb</name>
+        <value>12288</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.resource.cpu-vcores</name>
+        <value>4</value>
+    </property>
+    <property>
+        <name>yarn.scheduler.minimum-allocation-mb</name>
+        <value>4096</value>
+    </property>
+    <property>
+        <name>yarn.scheduler.maximum-allocation-mb</name>
+        <value>12288</value>
+    </property>
+    <property>
+        <name>yarn.app.mapreduce.am.resource.mb</name>
+        <value>4096</value>
+    </property>
+    <property>
+        <name>yarn.app.mapreduce.am.command-opts</name>
+        <value>-Xmx3072m</value>
+    </property>
+
+    <!-- ==================================================================== -->
+    <!-- Paths                                                                -->
+    <!-- ==================================================================== -->
+    <property>
+        <name>yarn.nodemanager.local-dirs</name>
+        <value>/data/yarn/local</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.log-dirs</name>
+        <value>/data/yarn/logs</value>
+    </property>
+    <property>
+        <name>yarn.nodemanager.remote-app-log-dir</name>
+        <value>/data/yarn/apps</value>
+    </property>
+    <property>
+        <name>yarn.app.mapreduce.am.staging-dir</name>
+        <value>/user</value>
+    </property>
+
+    <property>
+        <name>yarn.web-proxy.address</name>
+        <value>{{ hex.name }}.hex.bigboards.io:9046</value>
+    </property>
+
+    <property>
+        <name>yarn.timeline-service.store-class</name>
+        <value>org.apache.hadoop.yarn.server.timeline.LeveldbTimelineStore</value>
+    </property>
 </configuration>
