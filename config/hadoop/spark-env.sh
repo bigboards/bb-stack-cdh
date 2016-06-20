@@ -51,6 +51,6 @@
 # - SPARK_IDENT_STRING  A string representing this instance of spark. (Default: $USER)
 # - SPARK_NICENESS      The scheduling priority for daemons. (Default: 0)
 
-SPARK_LOCAL_IP="{{ansible_eth1.ipv4.address}}"
-SPARK_MASTER_IP="{{hex.name}}-n1.hex"
+SPARK_LOCAL_IP="[[ ansible_eth1.ipv4.address ]]"
+SPARK_MASTER_IP="[[ hex.name ]]-n1.hex"
 HADOOP_CONF_DIR="/etc/hadoop/conf"

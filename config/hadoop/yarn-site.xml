@@ -70,15 +70,15 @@
     <!-- ==================================================================== -->
     <property>
         <name>yarn.nodemanager.webapp.address</name>
-        <value>{{ hex.name }}.hex.bigboards.io:8042</value>
+        <value>[[ hex.name ]].hex.bigboards.io:8042</value>
     </property>
     <property>
         <name>yarn.resourcemanager.webapp.address</name>
-        <value>{{ hex.name }}.hex.bigboards.io:8088</value>
+        <value>[[ hex.name ]].hex.bigboards.io:8088</value>
     </property>
     <property>
         <name>yarn.web-proxy.address</name>
-        <value>{{ hex.name }}.hex.bigboards.io:9046</value>
+        <value>[[ hex.name ]].hex.bigboards.io:9046</value>
     </property>
 
     <!-- ==================================================================== -->
@@ -86,12 +86,12 @@
     <!-- ==================================================================== -->
     <property>
         <name>yarn.resourcemanager.hostname</name>
-        <value>{{ hex.name }}-n1</value>
+        <value>[[ hex.name ]]-n1</value>
     </property>
 
     <property>
         <name>yarn.nodemanager.hostname</name>
-        <value>{{ ansible_hostname }}</value>
+        <value>[[ ansible_hostname ]]</value>
     </property>
     <property>
         <name>yarn.nodemanager.address</name>
@@ -105,7 +105,7 @@
     <!-- armv7l => Using cores=4 memory=2GB disks=1 hbase=False               -->
     <!-- x86_64 => Using cores=4 memory=16GB disks=1 hbase=False              -->
     <!--                                                                      -->
-    <!-- This node's architecture is '{{ ansible_architecture }}'             -->
+    <!-- This node's architecture is '[[ ansible_architecture ]]'             -->
     <!-- ==================================================================== -->
     <property>
         <name>yarn.nodemanager.resource.memory-mb</name>
@@ -154,7 +154,7 @@
 
     <property>
         <name>yarn.web-proxy.address</name>
-        <value>{{ hex.name }}.hex.bigboards.io:9046</value>
+        <value>[[ hex.name ]].hex.bigboards.io:9046</value>
     </property>
 
     <property>
